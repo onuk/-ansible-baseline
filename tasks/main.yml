@@ -1,0 +1,36 @@
+---
+- name: "Setup locales"
+  community.general.locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    "{{locales}}"
+
+- name: "Set timezone to {{timezone_name}}"
+  timezone:
+    name: "{{timezone_name}}"
+
+- name: "Add sources.list"
+  template:
+    src: "etc/apt/sources.list.j2"
+    dest: "/etc/apt/sources.list"
+    mode: 0644
+  notify: update_apt_cache
+
+- name: "Install basic packages"
+  apt:
+    update_cache: true
+    name:
+      '{{ packages }}'
+
+- name: Create sysctl configuration
+  template:
+    src: "etc/sysctl.conf.j2"
+    dest: "{{ sysctl_config_location }}"
+  notify:
+    - Reload sysctl configuration
+
+- name: Create ulimit configuration
+  template:
+    src: "etc/security/limits.conf.j2"
+    dest: "{{ ulimit_config_location }}"

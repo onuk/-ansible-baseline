@@ -1,0 +1,5 @@
+---
+# handlers file for ansible-baseline
+
+- name: Reload sysctl configuration
+  shell: sysctl -p "{{ sysctl_config_location }}"
