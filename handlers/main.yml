@@ -3,3 +3,7 @@
 
 - name: Reload sysctl configuration
   shell: sysctl -p "{{ sysctl_config_location }}"
+
+- name: update_apt_cache
+  apt:
+    update_cache: yes

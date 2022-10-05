@@ -157,9 +157,8 @@ sysctl_config:
 # Do a 'modprobe tcp_bbr' first (kernel > 4.9)
 # Fall-back to htcp if bbr is unavailable (older kernels)
     net.ipv4.tcp_congestion_control: htcp
-    net.ipv4.tcp_congestion_control: bbr
     net.ipv4.tcp_notsent_lowat: 16384
-    
+
 # For servers with tcp-heavy workloads enable 'fq' queue management scheduler (kernel > 3.12)
     net.core.default_qdisc: fq
 
